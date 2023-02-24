@@ -54,14 +54,16 @@ class TodoListScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               imageContainer: Icon(Icons.work_outline),
               title: Text(
-                todo.title,
+                todo.title.length > 50 ?
+                '${todo.title.substring(0, 50)}...' : todo.title,
                 style: const TextStyle(fontSize: 20, color: Colors.white),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 50,
                 // maxLines: 1,
               ),
               subtitle: Text(
-                todo.description,
+                todo.description.length > 50 ?
+                '${todo.description.substring(0, 50)}...' : todo.description,
                 style: const TextStyle(fontSize: 13, color: Colors.white),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 50,
@@ -88,11 +90,11 @@ class TodoListScreen extends StatelessWidget {
                     style: ButtonStyle(foregroundColor: MaterialStatePropertyAll<Color>(todo.isNotStart() ? Colors.blue : Colors.red)),
                   ),
                   TextButton(onPressed: (){
-                    if(todo.isStart() && todo.isNotStart()){
+                    if(!todo.isFinish() && todo.isStart()){
                       controller.finishTodo(id: todo.id);
                     }
                   }, child: Text("Finir"),
-                    style: ButtonStyle(foregroundColor: MaterialStatePropertyAll<Color>(todo.isFinish() ? Colors.red : Colors.blue)),
+                    style: ButtonStyle(foregroundColor: MaterialStatePropertyAll<Color>(!todo.isFinish() && todo.isStart() ? Colors.blue : Colors.red)),
                   )
                 ],
               ),
